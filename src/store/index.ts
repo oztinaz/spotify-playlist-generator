@@ -1,10 +1,13 @@
 import { createStore } from 'vuex'
+
 import { State } from '@/store/types'
+
+// modules
+import authorization from '@/store/authorization'
 
 export default createStore<State>({
     state: {
-        message: 'Hello, World!'
-    },
+    } as State,
     getters: {
     },
     mutations: {
@@ -12,5 +15,6 @@ export default createStore<State>({
     actions: {
     },
     modules: {
+        authorization
     }
 })

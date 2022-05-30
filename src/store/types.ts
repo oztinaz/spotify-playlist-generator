@@ -1,3 +1,8 @@
+import { 
+    State as AuthorizationState
+} from '@/store/authorization/types'
+
 export type State = {
-    message: string
+    // modules
+    authorization: AuthorizationState
 }
