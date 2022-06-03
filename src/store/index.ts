@@ -4,6 +4,7 @@ import { State } from '@/store/types'
 
 // modules
 import authorization from '@/store/authorization'
+import playlist from '@/store/playlist'
 
 export default createStore<State>({
     state: {
@@ -15,6 +16,7 @@ export default createStore<State>({
     actions: {
     },
     modules: {
-        authorization
+        authorization,
+        playlist
     }
 })

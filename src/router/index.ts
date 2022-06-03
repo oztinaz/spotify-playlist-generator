@@ -4,6 +4,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import AskAuthorization from '@/views/AskAuthorization.vue'
 import Authorization from '@/views/Authorization.vue'
 import Home from '@/views/Home.vue'
+import Playlists from '@/views/Playlists.vue'
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -20,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/authorization',
         name: 'Authorization',
         component: Authorization
+    },
+    {
+        path: '/playlists',
+        name: 'Playlists',
+        component: Playlists
     }
 ]
 
@@ -47,8 +53,6 @@ async function setAccessToken() {
             await store.dispatch('authorization/refreshToken', accessToken.getRefresh())
         }
     }
-
-    localStorage.removeItem('accessToken')
 }
 
 router.beforeEach(async (to, from, next) => {
