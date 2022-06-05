@@ -1,8 +1,13 @@
+import { SpotifyImage } from '@/types/spotify-image'
+
 export type SpotifyPlaylist = {
     id: string,
     collaborative: boolean,
     description: string,
-    href: string
     name: string,
-    public: boolean
+    public: boolean,
+    images: Array<SpotifyImage>,
+    tracks: {
+        total: number
+    }
 }

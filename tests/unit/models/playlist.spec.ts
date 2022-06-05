@@ -1,11 +1,23 @@
+import { Album } from '@/models/album'
+import { Duration } from '@/models/duration'
+import { Image } from '@/models/image'
 import { Playlist } from '@/models/playlist'
+import { Track } from '@/models/track'
 
 const fakeId: string = 'fakeId'
 const fakeCollaborative: boolean = true
 const fakeDescription: string = 'fakeDescription'
-const fakeHref: string = 'fakeHref'
+const fakeImages: Array<Image> = [
+    new Image('url1', 40, 40),
+    new Image('url2', 50, 50)
+]
 const fakeName: string = 'fakeName'
 const fakePublicity: boolean = true
+const fakeTotal: number = 20
+const fakeTracks: Array<Track> = [
+    new Track('', new Album('', [], [], [], '', 0, ''), [], new Duration(0, 0, 0, 0), false, [], '', ''),
+    new Track('', new Album('', [], [], [], '', 0, ''), [], new Duration(0, 0, 0, 0), false, [], '', '')
+]
 
 describe('@/models/playlist.ts', () => {
     it('checks getters', () => {
@@ -13,17 +25,20 @@ describe('@/models/playlist.ts', () => {
             fakeId,
             fakeCollaborative,
             fakeDescription,
-            fakeHref,
+            fakeImages,
             fakeName,
-            fakePublicity
+            fakePublicity,
+            fakeTotal,
+            fakeTracks
         )
 
         expect(playlist.getId()).toBe(fakeId)
         expect(playlist.isCollaborative()).toBe(fakeCollaborative)
         expect(playlist.getDescription()).toBe(fakeDescription)
-        expect(playlist.getHref()).toBe(fakeHref)
+        expect(playlist.getImages()).toStrictEqual(fakeImages)
         expect(playlist.getName()).toBe(fakeName)
         expect(playlist.isPublic()).toBe(fakePublicity)
+        expect(playlist.getTotal()).toBe(fakeTotal)
     })
 
     it('checks setters', () => {
@@ -31,9 +46,11 @@ describe('@/models/playlist.ts', () => {
             'a',
             false,
             'a',
+            [],
             'a',
-            'a',
-            false
+            false,
+            0,
+            []
         )
 
         playlist.setId(fakeId)
@@ -45,13 +62,19 @@ describe('@/models/playlist.ts', () => {
         playlist.setDescription(fakeDescription)
         expect(playlist.getDescription()).toBe(fakeDescription)
 
-        playlist.setHref(fakeHref)
-        expect(playlist.getHref()).toBe(fakeHref)
+        playlist.setImages(fakeImages)
+        expect(playlist.getImages()).toStrictEqual(fakeImages)
 
         playlist.setName(fakeName)
         expect(playlist.getName()).toBe(fakeName)
 
         playlist.setPublicity(fakePublicity)
         expect(playlist.isPublic()).toBe(fakePublicity)
+
+        playlist.setTotal(fakeTotal)
+        expect(playlist.getTotal()).toBe(fakeTotal)
+
+        playlist.setTracks(fakeTracks)
+        expect(playlist.getTracks()).toBe(fakeTracks)
     })
 })

@@ -10,7 +10,8 @@ import { mutations } from '@/store/playlist/mutations'
 const playlist: Module<State, RootState> = {
     namespaced: true,
     state: {
-        playlists: []
+        playlists: [],
+        createdPlaylist: null
     },
     // getters: getters,
     mutations: mutations,

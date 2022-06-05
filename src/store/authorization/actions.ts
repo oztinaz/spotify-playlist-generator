@@ -27,11 +27,11 @@ export interface Actions {
     [ActionTypes.GET_ACCESS_TOKEN](
         { commit }: AugmentedActionContext,
         payload: string
-    ): Promise<void>,
+    ): Promise<void>
     [ActionTypes.REFRESH_TOKEN](
         { commit }: AugmentedActionContext,
         payload: string
-    ): Promise<void>,
+    ): Promise<void>
     [ActionTypes.REQUEST_TOKEN](
         { commit }: AugmentedActionContext,
         payload: AccessTokenParams | RefreshTokenParams

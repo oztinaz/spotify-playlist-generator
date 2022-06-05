@@ -10,7 +10,9 @@ import { Playlist } from '@/models/playlist'
 import { PlaylistMapper } from '@/mappers/playlist'
 
 export enum ActionTypes {
-    GET_PLAYLISTS = 'getPlaylists'
+    GET_PLAYLISTS = 'getPlaylists',
+    CREATE_PLAYLIST = 'createPlaylist',
+    ADD_ITEMS_TO_PLAYLIST = 'addItemsToPlaylist'
 }
 
 type AugmentedActionContext = {
@@ -23,6 +25,17 @@ type AugmentedActionContext = {
 export interface Actions {
     [ActionTypes.GET_PLAYLISTS](
         { commit }: AugmentedActionContext
+    ): Promise<void>
+    [ActionTypes.CREATE_PLAYLIST](
+        { commit }: AugmentedActionContext,
+        payload: {
+            userId: string,
+            playlist: Playlist
+        }
+    ): Promise<void>
+    [ActionTypes.ADD_ITEMS_TO_PLAYLIST](
+        { commit }: AugmentedActionContext,
+        payload: Array<string>
     ): Promise<void>
 }
 
@@ -41,8 +54,39 @@ export const actions: ActionTree<State, RootState> & Actions = {
                 playlists.push(PlaylistMapper.spotifyPlaylistToPlaylist(item))
             })
             commit(MutationTypes.SET_PLAYLISTS, playlists)
-        }).catch(err => {
-            console.error(err)
+        })
+    },
+    async [ActionTypes.CREATE_PLAYLIST]({ commit, rootState }, payload) {
+        await axios.post(
+            'https://api.spotify.com/v1/users/' + payload.userId +'/playlists',
+            {
+                name: payload.playlist.getName(),
+                public: payload.playlist.isPublic(),
+                collaborative: payload.playlist.isCollaborative(),
+                description: payload.playlist.getDescription()
+            },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + rootState.authorization.accessToken?.getToken(),
+                }
+            }
+        ).then((resp: { data: SpotifyPlaylist }) => {
+            commit(MutationTypes.SET_CREATED_PLAYLIST, PlaylistMapper.spotifyPlaylistToPlaylist(resp.data))
+        })
+    },
+    async [ActionTypes.ADD_ITEMS_TO_PLAYLIST]({ commit, rootState, state }, payload) {
+        await axios.post(
+            'https://api.spotify.com/v1/playlists/' + state.createdPlaylist?.getId() +'/tracks',
+            {
+                uris: payload
+            },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + rootState.authorization.accessToken?.getToken(),
+                }
+            }
+        ).then(() => {
+            console.log('OK')
         })
     }
 }

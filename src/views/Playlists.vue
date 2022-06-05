@@ -1,6 +1,6 @@
 <template>
     <div id="playlists">
-        <PlaylistCard
+        <Cassette
             v-for="playlist in playlists"
             :key="playlist.getId()"
             :playlist="playlist"
@@ -9,13 +9,14 @@
 </template>
 
 <script lang="ts">
-import PlaylistCard from '@/components/PlaylistCard.vue'
 import { defineComponent } from '@vue/runtime-core'
 import { mapActions, mapState } from 'vuex'
 
+import Cassette from '@/components/cassette/Main.vue'
+
 export default defineComponent({
     components: {
-        PlaylistCard
+        Cassette
     },
     computed: {
         ...mapState('playlist', [
@@ -34,5 +35,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
-    
+#playlists {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
 </style>

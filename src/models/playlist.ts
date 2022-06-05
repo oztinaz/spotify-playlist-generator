@@ -1,3 +1,6 @@
+import { Image } from '@/models/image'
+import { Track } from '@/models/track'
+
 export class Playlist {
 
     private id: string
@@ -6,26 +9,34 @@ export class Playlist {
 
     private description: string
 
-    private href: string
+    private images : Array<Image>
 
     private name: string
 
     private publicity: boolean
 
+    private total: number
+
+    private tracks: Array<Track>
+
     constructor(
         id: string, 
         collaborative: boolean, 
         description: string,
-        href: string,
+        images: Array<Image>,
         name: string,
-        publicity: boolean
+        publicity: boolean,
+        total: number,
+        tracks: Array<Track>
     ) {
         this.id = id
         this.collaborative = collaborative
         this.description = description
-        this.href = href
+        this.images = images
         this.name = name
         this.publicity = publicity
+        this.total = total
+        this.tracks = tracks
     }
 
     public getId(): string {
@@ -52,12 +63,12 @@ export class Playlist {
         this.description = description
     }
 
-    public getHref(): string {
-        return this.href
+    public getImages(): Array<Image> {
+        return this.images
     }
 
-    public setHref(href: string): void {
-        this.href = href
+    public setImages(images: Array<Image>): void {
+        this.images = images
     }
 
     public getName(): string {
@@ -74,5 +85,21 @@ export class Playlist {
 
     public setPublicity(publicity: boolean): void {
         this.publicity = publicity
+    }
+
+    public getTotal(): number {
+        return this.total
+    }
+
+    public setTotal(total: number): void {
+        this.total = total
+    }
+
+    public getTracks(): Array<Track> {
+        return this.tracks
+    }
+
+    public setTracks(tracks: Array<Track>): void {
+        this.tracks = tracks
     }
 }
