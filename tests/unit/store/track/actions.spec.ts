@@ -2,34 +2,19 @@ import { AccessToken } from '@/models/access-token'
 import { SpotifyTrack } from '@/types/spotify-track'
 import store from '@/store'
 import axios from 'axios'
+import { generateFakeSpotifyTrack } from '@/../tests/fakers/spotify/track'
+import { generateFakeAccessToken } from '@/../tests/fakers/models/access-token'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 
-const fakeSpotifyTrack: SpotifyTrack = {
-    id: 'id1',
-    album: {
-        id: '',
-        album_type: '',
-        artists: [],
-        available_markets: [],
-        images: [],
-        name: '',
-        total_tracks: 0
-    },
-    artists: [],
-    duration_ms: 0,
-    explicit: false,
-    available_markets: [],
-    name: '',
-    uri: ''
-}
+const fakeSpotifyTrack: SpotifyTrack = generateFakeSpotifyTrack()
 
 describe('@/store/track/actions.ts', () => {
     it('checks getRecomendations action', async () => {
         mockedAxios.get.mockResolvedValue({ data: { tracks: [fakeSpotifyTrack] } })
-        const mockAccessToken: AccessToken = new AccessToken('token', new Date(), ['a', 'b'])
-        store.commit('authorization/setAccessToken', mockAccessToken)
+        const fakeAccessToken: AccessToken = generateFakeAccessToken()
+        store.commit('authorization/setAccessToken', fakeAccessToken)
 
         await store.dispatch('track/getRecommendations', {
             seed_artists: 'a,b,c',
@@ -41,7 +26,7 @@ describe('@/store/track/actions.ts', () => {
             'https://api.spotify.com/v1/recommendations',
             {
                 headers: {
-                    'Authorization': 'Bearer ' + mockAccessToken.getToken()
+                    'Authorization': 'Bearer ' + fakeAccessToken.getToken()
                 },
                 params: {
                     seed_artists: 'a,b,c',

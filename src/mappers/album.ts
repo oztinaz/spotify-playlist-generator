@@ -1,21 +1,34 @@
-import { Album } from '@/models/album'
-import { SpotifyAlbum } from '@/types/spotify-album'
-import { SpotifyArtist } from '@/types/spotify-artist'
-import { SpotifyImage } from '@/types/spotify-image'
+// Factories
+import { AlbumFactory } from '@/factories/album'
+
+// Mappers
 import { ArtistMapper } from '@/mappers/artist'
 import { ImageMapper } from '@/mappers/image'
 
+// Models
+import { Album } from '@/models/album'
+import { Artist } from '@/models/artist'
+import { Image } from '@/models/image'
+
+// Spotify Types
+import { SpotifyAlbum } from '@/types/spotify-album'
+
 export class AlbumMapper {
 
+    public static spotifyAlbumsToAlbums(spotifyAlbums: Array<SpotifyAlbum>): Array<Album> {
+        return spotifyAlbums.map((album: SpotifyAlbum) => {
+            return AlbumMapper.spotifyAlbumToAlbum(album)
+        })
+    }
+
     public static spotifyAlbumToAlbum(spotifyAlbum: SpotifyAlbum): Album {
-        return new Album(
+        const artists: Array<Artist> = ArtistMapper.spotifyArtistsToArtists(spotifyAlbum.artists)
+        const images: Array<Image> = ImageMapper.spotifyImagesToImages(spotifyAlbum.images)
+        
+        return AlbumFactory.create(
             spotifyAlbum.id,
-            spotifyAlbum.artists.map((artist: SpotifyArtist) => {
-                return ArtistMapper.spotifyArtistToArtist(artist)
-            }),
-            spotifyAlbum.images.map((image: SpotifyImage) => {
-                return ImageMapper.spotifyImageToImage(image)
-            }),
+            artists,
+            images,
             spotifyAlbum.available_markets,
             spotifyAlbum.name,
             spotifyAlbum.total_tracks,

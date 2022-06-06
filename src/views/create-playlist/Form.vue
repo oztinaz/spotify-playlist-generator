@@ -34,6 +34,7 @@
         </div>
         <div class="display">
             <DisplayPlaylist :playlist="playlist"/>
+            <button class="btn btn-success" @click="final()">Create</button>
         </div>
     </div>
     <RecommendationsModal
@@ -130,10 +131,12 @@ export default defineComponent({
                     step: 0.1
                 }
             ] as Array<Filter>,
-            selectedTracks: [] as Array<Track>
         }
     },
     computed: {
+        ...mapState('playlist', [
+            'createdPlaylist'
+        ]),
         ...mapState('track', [
             'recommendations'
         ]),
@@ -185,6 +188,10 @@ export default defineComponent({
         ...mapActions('track', [
             'getRecommendations'
         ]),
+        async final() {
+            await this.create()
+            await this.addItems()
+        },
         async generateRecommendations() {
             let filters: {[key: string]: any} = JSON.parse(JSON.stringify(this.notNullFilters))
             if (this.seedArtists !== '') {
@@ -206,7 +213,11 @@ export default defineComponent({
             })
         },
         async addItems(): Promise<void> {
-            await this.addItemsToPlaylist(['spotify:track:6ZYgoD3c2aE4dD3yVFWV51'])
+            const uris: Array<string> = []
+            this.playlist.getTracks().map((track: Track) => {
+                uris.push(track.getUri())
+            })
+            await this.addItemsToPlaylist(uris)
         }
     }
 })  

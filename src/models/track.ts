@@ -4,46 +4,46 @@ import { Duration } from '@/models/duration'
 
 export class Track {
 
-    private id: string
+    private id: string | null
     
-    private album: Album
+    private album: Album | null
 
     private artists: Array<Artist>
 
-    private duration: Duration
+    private duration: Duration | null
 
     private explicit: boolean
 
     private markets: Array<string>
 
-    private name: string
+    private name: string | null
 
-    private uri: string
+    private uri: string | null
 
-    constructor(id: string, album: Album, artists: Array<Artist>, duration: Duration, explicit: boolean, markets: Array<string>, name: string, uri: string) {
-        this.id = id
-        this.album = album
-        this.artists = artists
-        this.duration = duration
-        this.explicit = explicit
-        this.markets = markets
-        this.name = name
-        this.uri = uri
+    constructor() {
+        this.id = null
+        this.album = null
+        this.artists = []
+        this.duration = null
+        this.explicit = false
+        this.markets = []
+        this.name = null
+        this.uri = null
     }
 
-    public getId(): string {
+    public getId(): string | null {
         return this.id
     }
 
-    public setId(id: string): void {
+    public setId(id: string | null): void {
         this.id = id
     }
 
-    public getAlbum(): Album {
+    public getAlbum(): Album | null {
         return this.album
     }
 
-    public setAlbum(album: Album): void {
+    public setAlbum(album: Album | null): void {
         this.album = album
     }
 
@@ -55,11 +55,11 @@ export class Track {
         this.artists = artists
     }
 
-    public getDuration(): Duration {
+    public getDuration(): Duration | null {
         return this.duration
     }
 
-    public setDuration(duration: Duration): void {
+    public setDuration(duration: Duration | null): void {
         this.duration = duration
     }
 
@@ -79,19 +79,19 @@ export class Track {
         this.markets = markets
     }
 
-    public getName(): string {
+    public getName(): string | null {
         return this.name
     }
 
-    public setName(name: string): void {
+    public setName(name: string | null): void {
         this.name = name
     }
 
-    public getUri(): string {
+    public getUri(): string | null {
         return this.uri
     }
 
-    public setUri(uri: string): void {
+    public setUri(uri: string | null): void {
         this.uri = uri
     }
 }

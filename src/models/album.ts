@@ -3,7 +3,7 @@ import { Image } from '@/models/image'
 
 export class Album {
 
-    private id: string
+    private id: string | null
 
     private artists: Array<Artist>
 
@@ -11,27 +11,27 @@ export class Album {
 
     private markets: Array<string>
 
-    private name: string
+    private name: string | null
 
     private total: number
     
-    private type: string
+    private type: string | null
 
-    constructor(id: string, artists: Array<Artist>, images: Array<Image>, markets: Array<string>, name: string, total: number, type: string) {
-        this.id = id
-        this.artists = artists
-        this.images = images
-        this.markets = markets
-        this.name = name
-        this.total = total
-        this.type = type
+    constructor() {
+        this.id = null
+        this.artists = []
+        this.images = []
+        this.markets = []
+        this.name = null
+        this.total = 0
+        this.type = null
     }
 
-    public getId(): string {
+    public getId(): string | null {
         return this.id
     }
 
-    public setId(id: string): void {
+    public setId(id: string | null): void {
         this.id = id
     }
 
@@ -59,11 +59,11 @@ export class Album {
         this.markets = markets
     }
 
-    public getName(): string {
+    public getName(): string | null {
         return this.name
     }
 
-    public setName(name: string): void {
+    public setName(name: string | null): void {
         this.name = name
     }
 
@@ -75,11 +75,11 @@ export class Album {
         this.total = total
     }
 
-    public getType(): string {
+    public getType(): string | null {
         return this.type
     }
 
-    public setType(type: string): void {
+    public setType(type: string | null): void {
         this.type = type
     }
 }

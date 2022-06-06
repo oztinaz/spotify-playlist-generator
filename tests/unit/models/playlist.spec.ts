@@ -1,80 +1,36 @@
-import { Album } from '@/models/album'
-import { Duration } from '@/models/duration'
-import { Image } from '@/models/image'
-import { Playlist } from '@/models/playlist'
-import { Track } from '@/models/track'
+// Fakers
+import { generateFakePlaylist } from '@/../tests/fakers/models/playlist'
 
-const fakeId: string = 'fakeId'
-const fakeCollaborative: boolean = true
-const fakeDescription: string = 'fakeDescription'
-const fakeImages: Array<Image> = [
-    new Image('url1', 40, 40),
-    new Image('url2', 50, 50)
-]
-const fakeName: string = 'fakeName'
-const fakePublicity: boolean = true
-const fakeTotal: number = 20
-const fakeTracks: Array<Track> = [
-    new Track('', new Album('', [], [], [], '', 0, ''), [], new Duration(0, 0, 0, 0), false, [], '', ''),
-    new Track('', new Album('', [], [], [], '', 0, ''), [], new Duration(0, 0, 0, 0), false, [], '', '')
-]
+// Models
+import { Playlist } from '@/models/playlist'
 
 describe('@/models/playlist.ts', () => {
-    it('checks getters', () => {
-        const playlist: Playlist = new Playlist(
-            fakeId,
-            fakeCollaborative,
-            fakeDescription,
-            fakeImages,
-            fakeName,
-            fakePublicity,
-            fakeTotal,
-            fakeTracks
-        )
+    it('checks getters and setters', () => {
+        const fakePlaylist: Playlist = generateFakePlaylist()
+        const playlist: Playlist = new Playlist()
 
-        expect(playlist.getId()).toBe(fakeId)
-        expect(playlist.isCollaborative()).toBe(fakeCollaborative)
-        expect(playlist.getDescription()).toBe(fakeDescription)
-        expect(playlist.getImages()).toStrictEqual(fakeImages)
-        expect(playlist.getName()).toBe(fakeName)
-        expect(playlist.isPublic()).toBe(fakePublicity)
-        expect(playlist.getTotal()).toBe(fakeTotal)
-    })
+        playlist.setId(fakePlaylist.getId())
+        expect(playlist.getId()).toBe(fakePlaylist.getId())
 
-    it('checks setters', () => {
-        const playlist: Playlist = new Playlist(
-            'a',
-            false,
-            'a',
-            [],
-            'a',
-            false,
-            0,
-            []
-        )
+        playlist.setCollaborative(fakePlaylist.isCollaborative())
+        expect(playlist.isCollaborative()).toBe(fakePlaylist.isCollaborative())
 
-        playlist.setId(fakeId)
-        expect(playlist.getId()).toBe(fakeId)
+        playlist.setDescription(fakePlaylist.getDescription())
+        expect(playlist.getDescription()).toBe(fakePlaylist.getDescription())
 
-        playlist.setCollaborative(fakeCollaborative)
-        expect(playlist.isCollaborative()).toBe(fakeCollaborative)
+        playlist.setImages(fakePlaylist.getImages())
+        expect(playlist.getImages()).toStrictEqual(fakePlaylist.getImages())
 
-        playlist.setDescription(fakeDescription)
-        expect(playlist.getDescription()).toBe(fakeDescription)
+        playlist.setName(fakePlaylist.getName())
+        expect(playlist.getName()).toBe(fakePlaylist.getName())
 
-        playlist.setImages(fakeImages)
-        expect(playlist.getImages()).toStrictEqual(fakeImages)
+        playlist.setPublicity(fakePlaylist.isPublic())
+        expect(playlist.isPublic()).toBe(fakePlaylist.isPublic())
 
-        playlist.setName(fakeName)
-        expect(playlist.getName()).toBe(fakeName)
+        playlist.setTotal(fakePlaylist.getTotal())
+        expect(playlist.getTotal()).toBe(fakePlaylist.getTotal())
 
-        playlist.setPublicity(fakePublicity)
-        expect(playlist.isPublic()).toBe(fakePublicity)
-
-        playlist.setTotal(fakeTotal)
-        expect(playlist.getTotal()).toBe(fakeTotal)
-
-        playlist.setTracks(fakeTracks)
-        expect(playlist.getTracks()).toBe(fakeTracks)
+        playlist.setTracks(fakePlaylist.getTracks())
+        expect(playlist.getTracks()).toBe(fakePlaylist.getTracks())
     })
 })

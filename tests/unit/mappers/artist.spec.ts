@@ -1,36 +1,25 @@
-import { ImageMapper } from '@/mappers/image'
-import { ArtistMapper } from '@/mappers/artist'
-import { Artist } from '@/models/artist'
-import { SpotifyImage } from '@/types/spotify-image'
-import { SpotifyArtist } from '@/types/spotify-artist'
+// Fakers
+import { generateFakeSpotifyArtist } from '@/../tests/fakers/spotify/artist'
 
-const mockSpotifyArtist: SpotifyArtist = {
-    id: 'fakeId',
-    genres: [
-        'a',
-        'b'
-    ],
-    images: [
-        {
-            url: 'url',
-            height: 40,
-            width: 40
-        }
-    ],
-    name: 'fakeName',
-    uri: 'fakeUri'
-}
+// Mappers
+import { ArtistMapper } from '@/mappers/artist'
+import { ImageMapper } from '@/mappers/image'
+
+// Models
+import { Artist } from '@/models/artist'
+
+// Spotify Types
+import { SpotifyArtist } from '@/types/spotify-artist'
 
 describe('@/mappers/artist.ts', () => {
     it('checks spotifyArtistToArtist method', () => {
-        const artist: Artist = ArtistMapper.spotifyArtistToArtist(mockSpotifyArtist)
+        const fakeSpotifyArtist: SpotifyArtist = generateFakeSpotifyArtist()
+        const artist: Artist = ArtistMapper.spotifyArtistToArtist(fakeSpotifyArtist)
 
-        expect(artist.getId()).toBe(mockSpotifyArtist.id)
-        expect(artist.getGenres()).toStrictEqual(mockSpotifyArtist.genres)
-        expect(artist.getImages()).toStrictEqual(mockSpotifyArtist.images.map((image: SpotifyImage) => {
-            return ImageMapper.spotifyImageToImage(image)
-        }))
-        expect(artist.getName()).toBe(mockSpotifyArtist.name)
-        expect(artist.getUri()).toBe(mockSpotifyArtist.uri)
+        expect(artist.getId()).toBe(fakeSpotifyArtist.id)
+        expect(artist.getGenres()).toStrictEqual(fakeSpotifyArtist.genres)
+        expect(artist.getImages()).toStrictEqual(ImageMapper.spotifyImagesToImages(fakeSpotifyArtist.images))
+        expect(artist.getName()).toBe(fakeSpotifyArtist.name)
+        expect(artist.getUri()).toBe(fakeSpotifyArtist.uri)
     })
 })

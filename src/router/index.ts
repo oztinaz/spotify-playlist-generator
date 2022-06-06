@@ -3,7 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 // Views
 import AskAuthorization from '@/views/AskAuthorization.vue'
 import Authorization from '@/views/Authorization.vue'
-import CreatePlaylist from '@/views/CreatePlaylist.vue'
+import CreatePlaylist from '@/views/create-playlist/Main.vue'
 import Home from '@/views/Home.vue'
 import Playlists from '@/views/Playlists.vue'
 

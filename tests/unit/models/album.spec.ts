@@ -1,72 +1,33 @@
-import { Album } from '@/models/album'
-import { Artist } from '@/models/artist'
-import { Image } from '@/models/image'
+// Fakers
+import { generateFakeAlbum } from '@/../tests/fakers/models/album'
 
-const fakeId: string = 'fakeId'
-const fakeArtists: Array<Artist> = [
-    new Artist('', [], [], '', ''),
-    new Artist('', [], [], '', '')
-]
-const fakeImages: Array<Image> = [
-    new Image('url1', 40, 40),
-    new Image('url2', 50, 50)
-]
-const fakeMarkets: Array<string> = ['a', 'b']
-const fakeName: string = 'fakeName'
-const fakeTotal: number = 10
-const fakeType: string = 'fakeType'
+// Models
+import { Album } from '@/models/album'
 
 describe('@/models/album.ts', () => {
-    it('checks getters', () => {
-        const artist: Album = new Album(
-            fakeId,
-            fakeArtists,
-            fakeImages,
-            fakeMarkets,
-            fakeName,
-            fakeTotal,
-            fakeType
-        )
+    it('checks getters and setters', () => {
+        const fakeAlbum: Album = generateFakeAlbum()
+        const album: Album = new Album()
 
-        expect(artist.getId()).toBe(fakeId)
-        expect(artist.getArtists()).toStrictEqual(fakeArtists)
-        expect(artist.getImages()).toStrictEqual(fakeImages)
-        expect(artist.getMarkets()).toStrictEqual(fakeMarkets)
-        expect(artist.getName()).toBe(fakeName)
-        expect(artist.getTotal()).toBe(fakeTotal)
-        expect(artist.getType()).toBe(fakeType)
-    })
+        album.setId(fakeAlbum.getId())
+        expect(album.getId()).toBe(fakeAlbum.getId())
 
-    it('checks setters', () => {
-        const album: Album = new Album(
-            'a',
-            fakeArtists,
-            [],
-            [],
-            'a',
-            0,
-            'a'
-        )
+        album.setArtists(fakeAlbum.getArtists())
+        expect(album.getArtists()).toStrictEqual(fakeAlbum.getArtists())
 
-        album.setId(fakeId)
-        expect(album.getId()).toBe(fakeId)
+        album.setImages(fakeAlbum.getImages())
+        expect(album.getImages()).toStrictEqual(fakeAlbum.getImages())
 
-        album.setArtists(fakeArtists)
-        expect(album.getArtists()).toStrictEqual(fakeArtists)
+        album.setMarkets(fakeAlbum.getMarkets())
+        expect(album.getMarkets()).toStrictEqual(fakeAlbum.getMarkets())
 
-        album.setImages(fakeImages)
-        expect(album.getImages()).toStrictEqual(fakeImages)
+        album.setName(fakeAlbum.getName())
+        expect(album.getName()).toBe(fakeAlbum.getName())
 
-        album.setMarkets(fakeMarkets)
-        expect(album.getMarkets()).toStrictEqual(fakeMarkets)
+        album.setTotal(fakeAlbum.getTotal())
+        expect(album.getTotal()).toBe(fakeAlbum.getTotal())
 
-        album.setName(fakeName)
-        expect(album.getName()).toBe(fakeName)
-
-        album.setTotal(fakeTotal)
-        expect(album.getTotal()).toBe(fakeTotal)
-
-        album.setType(fakeType)
-        expect(album.getType()).toBe(fakeType)
+        album.setType(fakeAlbum.getType())
+        expect(album.getType()).toBe(fakeAlbum.getType())
     })
 })

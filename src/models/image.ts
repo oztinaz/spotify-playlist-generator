@@ -1,22 +1,22 @@
 export class Image {
 
-    private url: string
+    private url: string | null
     
     private height: number
 
     private width: number
 
-    constructor(url: string, height: number, width: number) {
-        this.url = url
-        this.height = height
-        this.width = width
+    constructor() {
+        this.url = null
+        this.height = 0
+        this.width = 0
     }
 
-    public getUrl(): string {
+    public getUrl(): string | null {
         return this.url
     }
 
-    public setUrl(url: string): void {
+    public setUrl(url: string | null): void {
         this.url = url
     }
 

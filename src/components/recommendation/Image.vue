@@ -23,7 +23,7 @@ export default defineComponent({
         }
     },
     computed: {
-        src(): string {
+        src(): string | null {
             return this.album.getImages()[0].getUrl()
         }
     }

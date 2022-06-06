@@ -198,7 +198,9 @@ export default defineComponent({
         artistsText(artists: Array<Artist>): string {
             const a: Array<string> = []
             artists.map((artist: Artist) => {
-                a.push(artist.getName())
+                if (artist.getName() !== null) {
+                    a.push(artist.getName() as string)
+                }
             })
             return a.join(', ')
         },

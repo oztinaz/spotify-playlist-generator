@@ -1,19 +1,22 @@
-import { ImageMapper } from '@/mappers/image'
-import { Image } from '@/models/image'
-import { SpotifyImage } from '@/types/spotify-image'
+// Fakers
+import { generateFakeSpotifyImage } from '@/../tests/fakers/spotify/image'
 
-const mockImage: SpotifyImage = {
-    url: 'fakeUrl',
-    height: 50,
-    width: 50
-}
+// Mappers
+import { ImageMapper } from '@/mappers/image'
+
+// Models
+import { Image } from '@/models/image'
+
+// Spotify Types
+import { SpotifyImage } from '@/types/spotify-image'
 
 describe('@/mappers/image.ts', () => {
     it('checks spotifyImageToImage method', () => {
-        const image: Image = ImageMapper.spotifyImageToImage(mockImage)
+        const fakeSpotifyImage: SpotifyImage = generateFakeSpotifyImage()
+        const image: Image = ImageMapper.spotifyImageToImage(fakeSpotifyImage)
 
-        expect(image.getUrl()).toBe(mockImage.url)
-        expect(image.getHeight()).toBe(mockImage.height)
-        expect(image.getWidth()).toBe(mockImage.width)
+        expect(image.getUrl()).toBe(fakeSpotifyImage.url)
+        expect(image.getHeight()).toBe(fakeSpotifyImage.height)
+        expect(image.getWidth()).toBe(fakeSpotifyImage.width)
     })
 })

@@ -1,17 +1,35 @@
+// Factories
+import { ArtistFactory } from '@/factories/artist'
+
+// Mappers
+import { ImageMapper } from '@/mappers/image'
+
+// Models
 import { Artist } from '@/models/artist'
+import { Image } from '@/models/image'
+
+// Spotify Types
 import { SpotifyArtist } from '@/types/spotify-artist'
 import { SpotifyImage } from '@/types/spotify-image'
-import { ImageMapper } from '@/mappers/image'
 
 export class ArtistMapper {
 
+    public static spotifyArtistsToArtists(spotifyArtists: Array<SpotifyArtist>): Array<Artist> {
+        return spotifyArtists.map((artist: SpotifyArtist) => {
+            return ArtistMapper.spotifyArtistToArtist(artist)
+        })
+    }
+
     public static spotifyArtistToArtist(spotifyArtist: SpotifyArtist): Artist {
-        return new Artist(
+        let images: Array<Image> = []
+        if ('images' in spotifyArtist) {
+            images = ImageMapper.spotifyImagesToImages(spotifyArtist.images)
+        }
+
+        return ArtistFactory.create(
             spotifyArtist.id,
             spotifyArtist.genres,
-            spotifyArtist.images?.map((image: SpotifyImage) => {
-                return ImageMapper.spotifyImageToImage(image)
-            }),
+            images,
             spotifyArtist.name,
             spotifyArtist.uri
         )

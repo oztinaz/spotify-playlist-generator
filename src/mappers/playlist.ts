@@ -1,18 +1,34 @@
+// Factories
+import { PlaylistFactory } from '@/factories/playlist'
+import { Image } from '@/models/image'
+
+// Mappers
+import { ImageMapper } from '@/mappers/image'
+
+// Models
 import { Playlist } from '@/models/playlist'
 import { SpotifyImage } from '@/types/spotify-image'
+
+// Spotify Types
 import { SpotifyPlaylist } from '@/types/spotify-playlist'
-import { ImageMapper } from './image'
+
 
 export class PlaylistMapper {
 
+    public static spotifyPlaylistsToPlaylists(spotifyPlaylists: Array<SpotifyPlaylist>): Array<Playlist> {
+        return spotifyPlaylists.map((playlist: SpotifyPlaylist) => {
+            return PlaylistMapper.spotifyPlaylistToPlaylist(playlist)
+        })
+    }
+
     public static spotifyPlaylistToPlaylist(spotifyPlaylist: SpotifyPlaylist): Playlist {
-        return new Playlist(
+        const images: Array<Image> = ImageMapper.spotifyImagesToImages(spotifyPlaylist.images)
+        
+        return PlaylistFactory.create(
             spotifyPlaylist.id,
             spotifyPlaylist.collaborative,
             spotifyPlaylist.description,
-            spotifyPlaylist.images.map((image: SpotifyImage) => {
-                return ImageMapper.spotifyImageToImage(image)
-            }),
+            images,
             spotifyPlaylist.name,
             spotifyPlaylist.public,
             spotifyPlaylist.tracks.total,

@@ -27,23 +27,28 @@ export default defineComponent({
         }
     },
     computed: {
-        albumName(): string {
-            return this.album.getName()
+        albumName(): string | null {
+            if (this.album !== null) {
+                return this.album.getName()
+            }
+            return null
         },
-        album(): Album {
+        album(): Album | null {
             return this.track.getAlbum()
         },
         artistsText(): string {
             const artists: Array<string> = []
             this.artists.map((artist: Artist) => {
-                artists.push(artist.getName())
+                if (artist.getName() !== null) {
+                    artists.push(artist.getName() as string)
+                }
             })
             return artists.join(', ')
         },
         artists(): Array<Artist> {
             return this.track.getArtists()
         },
-        name(): string {
+        name(): string | null {
             return this.track.getName()
         }
     }

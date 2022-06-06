@@ -1,13 +1,12 @@
-import { Album } from '@/models/album'
-import { Duration } from '@/models/duration'
 import { Track } from '@/models/track'
 import store from '@/store'
+import { generateFakeTrack } from '@/../tests/fakers/models/track'
 
 describe('@/store/track/mutations.ts', () => {
     it('checks for track mutations', () => {
         const fakeRecommendations: Array<Track> = [
-            new Track('', new Album('', [], [], [], '', 0, ''), [], new Duration(0, 0, 0, 0), false, [], '', ''),
-            new Track('', new Album('', [], [], [], '', 0, ''), [], new Duration(0, 0, 0, 0), false, [], '', ''),
+            generateFakeTrack(),
+            generateFakeTrack(),
         ]
 
         store.commit('track/setRecommendations', fakeRecommendations)

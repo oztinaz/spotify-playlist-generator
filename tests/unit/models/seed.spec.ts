@@ -1,11 +1,9 @@
-import { Album } from '@/models/album'
 import { Artist } from '@/models/artist'
-import { Duration } from '@/models/duration'
 import { Seed } from '@/models/seed'
 import { Track } from '@/models/track'
 
-const fakeArtist = new Artist('', [], [], '', '')
-const fakeTrack = new Track('', new Album('', [], [], [], '', 0, ''), [], new Duration(0, 0, 0, 0), false, [], '', '')
+const fakeArtist = new Artist()
+const fakeTrack = new Track()
 
 describe('@/models/seed.ts', () => {
     it('checks adders and getters', () => {

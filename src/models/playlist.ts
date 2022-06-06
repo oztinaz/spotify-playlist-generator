@@ -3,15 +3,15 @@ import { Track } from '@/models/track'
 
 export class Playlist {
 
-    private id: string
+    private id: string | null
 
     private collaborative: boolean
 
-    private description: string
+    private description: string | null
 
     private images : Array<Image>
 
-    private name: string
+    private name: string | null
 
     private publicity: boolean
 
@@ -19,31 +19,22 @@ export class Playlist {
 
     private tracks: Array<Track>
 
-    constructor(
-        id: string, 
-        collaborative: boolean, 
-        description: string,
-        images: Array<Image>,
-        name: string,
-        publicity: boolean,
-        total: number,
-        tracks: Array<Track>
-    ) {
-        this.id = id
-        this.collaborative = collaborative
-        this.description = description
-        this.images = images
-        this.name = name
-        this.publicity = publicity
-        this.total = total
-        this.tracks = tracks
+    constructor() {
+        this.id = null
+        this.collaborative = false
+        this.description = null
+        this.images = []
+        this.name = null
+        this.publicity = false
+        this.total = 0
+        this.tracks = []
     }
 
-    public getId(): string {
+    public getId(): string | null {
         return this.id
     }
 
-    public setId(id: string): void {
+    public setId(id: string | null): void {
         this.id = id
     }
 
@@ -55,11 +46,11 @@ export class Playlist {
         this.collaborative = collaborative
     }
 
-    public getDescription(): string {
+    public getDescription(): string | null {
         return this.description
     }
 
-    public setDescription(description: string): void {
+    public setDescription(description: string | null): void {
         this.description = description
     }
 
@@ -71,11 +62,11 @@ export class Playlist {
         this.images = images
     }
 
-    public getName(): string {
+    public getName(): string | null {
         return this.name
     }
 
-    public setName(name: string): void {
+    public setName(name: string | null): void {
         this.name = name
     }
 

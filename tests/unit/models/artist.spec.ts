@@ -1,57 +1,27 @@
-import { Image } from '@/models/image'
+// Fakers
+import { generateFakeArtist } from '@/../tests/fakers/models/artist'
+
+// Models
 import { Artist } from '@/models/artist'
 
-const fakeId: string = 'fakeId'
-const fakeGenres: Array<string> = [
-    'a',
-    'b'
-]
-const fakeImages: Array<Image> = [
-    new Image('url1', 40, 40),
-    new Image('url2', 50, 50)
-]
-const fakeName: string = 'fakeName'
-const fakeUri: string = 'fakeUri'
-
 describe('@/models/artist.ts', () => {
-    it('checks getters', () => {
-        const artist: Artist = new Artist(
-            fakeId,
-            fakeGenres,
-            fakeImages,
-            fakeName,
-            fakeUri
-        )
+    it('checks getters and setters', () => {
+        const fakeArtists: Artist = generateFakeArtist()
+        const artist: Artist = new Artist()
 
-        expect(artist.getId()).toBe(fakeId)
-        expect(artist.getGenres()).toStrictEqual(fakeGenres)
-        expect(artist.getImages()).toStrictEqual(fakeImages)
-        expect(artist.getName()).toBe(fakeName)
-        expect(artist.getUri()).toBe(fakeUri)
-    })
+        artist.setId(fakeArtists.getId())
+        expect(artist.getId()).toBe(fakeArtists.getId())
 
-    it('checks setters', () => {
-        const artist: Artist = new Artist(
-            'a',
-            [],
-            [],
-            'a',
-            ''
-        )
+        artist.setGenres(fakeArtists.getGenres())
+        expect(artist.getGenres()).toStrictEqual(fakeArtists.getGenres())
 
-        artist.setId(fakeId)
-        expect(artist.getId()).toBe(fakeId)
+        artist.setImages(fakeArtists.getImages())
+        expect(artist.getImages()).toStrictEqual(fakeArtists.getImages())
 
-        artist.setGenres(fakeGenres)
-        expect(artist.getGenres()).toStrictEqual(fakeGenres)
+        artist.setName(fakeArtists.getName())
+        expect(artist.getName()).toBe(fakeArtists.getName())
 
-        artist.setImages(fakeImages)
-        expect(artist.getImages()).toStrictEqual(fakeImages)
-
-        artist.setName(fakeName)
-        expect(artist.getName()).toBe(fakeName)
-
-        artist.setUri(fakeUri)
-        expect(artist.getUri()).toBe(fakeUri)
+        artist.setUri(fakeArtists.getUri())
+        expect(artist.getUri()).toBe(fakeArtists.getUri())
     })
 })

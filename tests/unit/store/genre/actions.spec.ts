@@ -3,15 +3,17 @@ import { AccessToken } from '@/models/access-token'
 import store from '@/store'
 import axios from 'axios'
 
+import { generateFakeAccessToken } from '@/../tests/fakers/models/access-token'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 
 describe('@/store/search/actions.ts', () => {
     it('checks searchItems action', async () => {
-        mockedAxios.get.mockResolvedValue({ data: { genres: ['a', 'b'] } })
-        const mockAccessToken: AccessToken = new AccessToken('token', new Date(), ['a', 'b'])
-        store.commit('authorization/setAccessToken', mockAccessToken)
+        const fakeGenres: Array<string> = ['a', 'b']
+        mockedAxios.get.mockResolvedValue({ data: { genres: fakeGenres } })
+        const fakeAccessToken: AccessToken = generateFakeAccessToken()
+        store.commit('authorization/setAccessToken', fakeAccessToken)
 
         await store.dispatch('genre/getGenres')
 
@@ -20,12 +22,12 @@ describe('@/store/search/actions.ts', () => {
             'https://api.spotify.com/v1/recommendations/available-genre-seeds',
             {
                 headers: {
-                    'Authorization': 'Bearer ' + mockAccessToken.getToken()
+                    'Authorization': 'Bearer ' + fakeAccessToken.getToken()
                 }
             } 
         )
 
         expect(store.state.genre.genres).toHaveLength(2)
-        expect(store.state.genre.genres).toStrictEqual(['a', 'b'])
+        expect(store.state.genre.genres).toStrictEqual(fakeGenres)
     })
 })

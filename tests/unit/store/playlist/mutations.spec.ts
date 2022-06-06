@@ -1,11 +1,12 @@
 import { Playlist } from '@/models/playlist'
 import store from '@/store'
+import { generateFakePlaylist } from '@/../tests/fakers/models/playlist'
 
 describe('@/store/playlist/mutations.ts', () => {
     it('checks for playlist mutations', () => {
         const fakePlaylists: Array<Playlist> = [
-            new Playlist('id1', true, 'desc1', [], 'name1', false, 0, []),
-            new Playlist('id2', false, 'desc2', [], 'name2', true, 0, []),
+            generateFakePlaylist(),
+            generateFakePlaylist(),
         ]
 
         store.commit('playlist/setPlaylists', fakePlaylists)

@@ -1,5 +1,6 @@
 import { SpotifyToken } from '@/types/spotify-token'
 import { AccessToken } from '@/models/access-token'
+import { AccessTokenFactory } from '@/factories/access-token'
 
 export class TokenMapper {
 
@@ -8,7 +9,7 @@ export class TokenMapper {
             return null
         }
 
-        return new AccessToken(
+        return AccessTokenFactory.create(
             tokenFromLocalStorage.token,
             new Date(tokenFromLocalStorage.expiresAt),
             tokenFromLocalStorage.scopes,
@@ -17,7 +18,7 @@ export class TokenMapper {
     }
 
     public static spotifyTokenToAccessToken(spotifyToken: SpotifyToken): AccessToken {
-        return new AccessToken(
+        return AccessTokenFactory.create(
             spotifyToken.access_token,
             this.getExpiresAt(spotifyToken.expires_in),
             this.getScopes(spotifyToken.scope),

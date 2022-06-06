@@ -7,52 +7,25 @@ import { SpotifyAlbum } from '@/types/spotify-album'
 import { SpotifyArtist } from '@/types/spotify-artist'
 import { AlbumMapper } from '@/mappers/album'
 import { ArtistMapper } from '@/mappers/artist'
+import { generateFakeSpotifyAlbum } from '@/../tests/fakers/spotify/album'
+import { generateFakeSpotifyArtist } from '@/../tests/fakers/spotify/artist'
+import { generateFakeSpotifyTrack } from '@/../tests/fakers/spotify/track'
+import { generateFakeAccessToken } from '@/../tests/fakers/models/access-token'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 
-const fakeSpotifyAlbum: SpotifyAlbum = {
-    id: '',
-    album_type: '',
-    artists: [],
-    available_markets: [],
-    images: [],
-    name: '',
-    total_tracks: 0
-}
+const fakeSpotifyAlbum: SpotifyAlbum = generateFakeSpotifyAlbum()
 
-const fakeSpotifyArtist: SpotifyArtist = {
-    id: '',
-    genres: [],
-    images: [],
-    name: '',
-    uri: ''
-}
+const fakeSpotifyArtist: SpotifyArtist = generateFakeSpotifyArtist()
 
-const fakeSpotifyTrack: SpotifyTrack = {
-    id: 'id1',
-    album: {
-        id: '',
-        album_type: '',
-        artists: [],
-        available_markets: [],
-        images: [],
-        name: '',
-        total_tracks: 0
-    },
-    artists: [],
-    duration_ms: 0,
-    explicit: false,
-    available_markets: [],
-    name: '',
-    uri: ''
-}
+const fakeSpotifyTrack: SpotifyTrack = generateFakeSpotifyTrack()
 
 describe('@/store/search/actions.ts', () => {
     it('checks searchItems action', async () => {
         mockedAxios.get.mockResolvedValue({ data: { albums: { items: [fakeSpotifyAlbum] }, artists: { items: [fakeSpotifyArtist] }, tracks: { items: [fakeSpotifyTrack] } } })
-        const mockAccessToken: AccessToken = new AccessToken('token', new Date(), ['a', 'b'])
-        store.commit('authorization/setAccessToken', mockAccessToken)
+        const fakeAccessToken: AccessToken = generateFakeAccessToken()
+        store.commit('authorization/setAccessToken', fakeAccessToken)
 
         await store.dispatch('search/searchItems', {
             q: 'fakeQuery',
@@ -65,7 +38,7 @@ describe('@/store/search/actions.ts', () => {
             'https://api.spotify.com/v1/search',
             {
                 headers: {
-                    'Authorization': 'Bearer ' + mockAccessToken.getToken()
+                    'Authorization': 'Bearer ' + fakeAccessToken.getToken()
                 },
                 params: {
                     q: 'fakeQuery',

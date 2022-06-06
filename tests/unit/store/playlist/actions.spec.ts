@@ -3,36 +3,18 @@ import { SpotifyPlaylist } from '@/types/spotify-playlist'
 import store from '@/store'
 import axios from 'axios'
 import { Playlist } from '@/models/playlist'
+import { generateFakeSpotifyPlaylist } from '@/../tests/fakers/spotify/playlist'
+import { generateFakeAccessToken } from '@/../tests/fakers/models/access-token'
+import { generateFakePlaylist } from '@/../tests/fakers/models/playlist'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 
-const fakeSpotifyPlaylist1: SpotifyPlaylist = {
-    id: 'id1',
-    collaborative: true,
-    description: 'desc1',
-    images: [],
-    name: 'name1',
-    public: false,
-    tracks: {
-        total: 0
-    }
-}
+const fakeSpotifyPlaylist1: SpotifyPlaylist = generateFakeSpotifyPlaylist()
+const fakeSpotifyPlaylist2: SpotifyPlaylist = generateFakeSpotifyPlaylist()
 
-const fakeSpotifyPlaylist2: SpotifyPlaylist = {
-    id: 'id2',
-    collaborative: false,
-    description: 'desc2',
-    images: [],
-    name: 'name2',
-    public: true,
-    tracks: {
-        total: 0
-    }
-}
-
-const mockAccessToken: AccessToken = new AccessToken('token', new Date(), ['a', 'b'])
-store.commit('authorization/setAccessToken', mockAccessToken)
+const fakeAccessToken: AccessToken = generateFakeAccessToken()
+store.commit('authorization/setAccessToken', fakeAccessToken)
 
 describe('@/store/playlist/actions.ts', () => {
     it('checks getPlaylist action', async () => {
@@ -45,7 +27,7 @@ describe('@/store/playlist/actions.ts', () => {
             'https://api.spotify.com/v1/me/playlists',
             {
                 headers: {
-                    'Authorization': 'Bearer ' + mockAccessToken.getToken()
+                    'Authorization': 'Bearer ' + fakeAccessToken.getToken()
                 }
             } 
         )
@@ -56,25 +38,8 @@ describe('@/store/playlist/actions.ts', () => {
     })
     
     it('checks createPlaylist action', async () => {
-        const fakePlaylist: Playlist = new Playlist('', true, '', [], '', true, 0, [])
-        const fakeSpotifyPlaylist: SpotifyPlaylist = {
-            id: '',
-            collaborative: fakePlaylist.isCollaborative(),
-            description: fakePlaylist.getDescription(),
-            name: fakePlaylist.getName(),
-            images: [
-                {
-                    url: '',
-                    height: 0,
-                    width: 0
-                }
-            ],
-            public: fakePlaylist.isPublic(),
-            tracks: {
-                total: 0
-            }
-        }
-        mockedAxios.post.mockResolvedValue({ data: fakeSpotifyPlaylist })
+        const fakePlaylist: Playlist = generateFakePlaylist()
+        mockedAxios.post.mockResolvedValue({ data: fakeSpotifyPlaylist1 })
 
         await store.dispatch('playlist/createPlaylist', {
             userId: '111',
@@ -92,16 +57,16 @@ describe('@/store/playlist/actions.ts', () => {
             },
             {
                 headers: {
-                    'Authorization': 'Bearer ' + mockAccessToken.getToken()
+                    'Authorization': 'Bearer ' + fakeAccessToken.getToken()
                 }
             } 
         )
 
-        expect(store.state.playlist.createdPlaylist?.getName()).toBe(fakeSpotifyPlaylist.name)
+        expect(store.state.playlist.createdPlaylist?.getName()).toBe(fakeSpotifyPlaylist1.name)
     })
     
     it('checks addItemsToPlaylist action', async () => {
-        const fakePlaylist: Playlist = new Playlist('fakeId', true, '', [], '', true, 0, [])
+        const fakePlaylist: Playlist = generateFakePlaylist()
         store.commit('playlist/setCreatedPlaylist', fakePlaylist)
         mockedAxios.post.mockResolvedValue({ data: { snapshot_id: 'fakeString' } })
 
@@ -111,13 +76,13 @@ describe('@/store/playlist/actions.ts', () => {
 
         expect(mockedAxios.post).toBeCalledTimes(2)
         expect(mockedAxios.post).toBeCalledWith(
-            'https://api.spotify.com/v1/playlists/fakeId/tracks',
+            'https://api.spotify.com/v1/playlists/' + fakePlaylist.getId() + '/tracks',
             {
                 uris: ['fakeUri']
             },
             {
                 headers: {
-                    'Authorization': 'Bearer ' + mockAccessToken.getToken()
+                    'Authorization': 'Bearer ' + fakeAccessToken.getToken()
                 }
             } 
         )

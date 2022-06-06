@@ -44,7 +44,7 @@ export default defineComponent({
         total(): number {
             return this.playlist.getTotal()
         },
-        name(): string {
+        name(): string | null {
             return this.playlist.getName()
         }
     }

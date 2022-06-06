@@ -1,36 +1,21 @@
+// Fakers
+import { generateFakeImage } from '@/../tests/fakers/models/image'
+
+// Models
 import { Image } from '@/models/image'
 
-const fakeUrl: string = 'fakeUrl'
-const fakeHeight: number = 40
-const fakeWidth: number = 40
-
 describe('@/models/image.ts', () => {
-    it('checks getters', () => {
-        const image: Image = new Image(
-            fakeUrl,
-            fakeHeight,
-            fakeWidth
-        )
+    it('checks getters and setters', () => {
+        const fakeImage: Image = generateFakeImage()
+        const image: Image = new Image()
 
-        expect(image.getUrl()).toBe(fakeUrl)
-        expect(image.getHeight()).toBe(fakeHeight)
-        expect(image.getWidth()).toBe(fakeWidth)
-    })
+        image.setUrl(fakeImage.getUrl())
+        expect(image.getUrl()).toBe(fakeImage.getUrl())
 
-    it('checks setters', () => {
-        const image: Image = new Image(
-            'a',
-            40,
-            40
-        )
+        image.setHeight(fakeImage.getHeight())
+        expect(image.getHeight()).toBe(fakeImage.getHeight())
 
-        image.setUrl(fakeUrl)
-        expect(image.getUrl()).toBe(fakeUrl)
-
-        image.setHeight(fakeHeight)
-        expect(image.getHeight()).toBe(fakeHeight)
-
-        image.setWidth(fakeWidth)
-        expect(image.getWidth()).toBe(fakeWidth)
+        image.setWidth(fakeImage.getWidth())
+        expect(image.getWidth()).toBe(fakeImage.getWidth())
     })
 })

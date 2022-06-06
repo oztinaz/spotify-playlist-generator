@@ -2,29 +2,29 @@ import { Image } from '@/models/image'
 
 export class Artist {
 
-    private id: string
+    private id: string | null
 
     private genres: Array<string>
 
     private images : Array<Image>
 
-    private name: string
+    private name: string | null
 
-    private uri: string
+    private uri: string | null
 
-    constructor(id: string, genres: Array<string>, images: Array<Image>, name: string, uri: string) {
-        this.id = id
-        this.genres = genres
-        this.images = images
-        this.name = name
-        this.uri = uri
+    constructor() {
+        this.id = null
+        this.genres = []
+        this.images = []
+        this.name = null
+        this.uri = null
     }
 
-    public getId(): string {
+    public getId(): string | null {
         return this.id
     }
 
-    public setId(id: string): void {
+    public setId(id: string | null): void {
         this.id = id
     }
 
@@ -44,19 +44,19 @@ export class Artist {
         this.images = images
     }
 
-    public getName(): string {
+    public getName(): string | null {
         return this.name
     }
 
-    public setName(name: string): void {
+    public setName(name: string | null): void {
         this.name = name
     }
 
-    public getUri(): string {
+    public getUri(): string | null {
         return this.uri
     }
 
-    public setUri(uri: string): void {
+    public setUri(uri: string | null): void {
         this.uri = uri
     }
 }

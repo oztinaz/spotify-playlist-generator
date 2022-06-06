@@ -1,78 +1,36 @@
-import { Image } from '@/models/image'
-import { Album } from '@/models/album'
-import { Artist } from '@/models/artist'
-import { Track } from '@/models/track'
-import { Duration } from '@/models/duration'
+// Fakers
+import { generateFakeTrack } from '@/../tests/fakers/models/track'
 
-const fakeId: string = 'fakeId'
-const fakeAlbum: Album = new Album('', [], [], [], '', 0, '')
-const fakeArtists: Array<Artist> = [
-    new Artist('', [], [], '', ''),
-    new Artist('', [], [], '', '')
-]
-const fakeDuration: Duration = new Duration(1, 1, 1 ,1)
-const fakeExplicit: boolean = true
-const fakeMarkets: Array<string> = ['a', 'b']
-const fakeName: string = 'fakeName'
-const fakeUri: string = 'fakeUri'
+// Models
+import { Track } from '@/models/track'
 
 describe('@/models/track.ts', () => {
-    it('checks getters', () => {
-        const track: Track = new Track(
-            fakeId,
-            fakeAlbum,
-            fakeArtists,
-            fakeDuration,
-            fakeExplicit,
-            fakeMarkets,
-            fakeName,
-            fakeUri
-        )
+    it('checks getters and setters', () => {
+        const fakeTrack: Track = generateFakeTrack()
+        const track: Track = new Track()
 
-        expect(track.getId()).toBe(fakeId)
-        expect(track.getAlbum()).toStrictEqual(fakeAlbum)
-        expect(track.getArtists()).toStrictEqual(fakeArtists)
-        expect(track.getDuration()).toBe(fakeDuration)
-        expect(track.isExplicit()).toBe(fakeExplicit)
-        expect(track.getMarkets()).toBe(fakeMarkets)
-        expect(track.getName()).toBe(fakeName)
-        expect(track.getUri()).toBe(fakeUri)
-    })
+        track.setId(fakeTrack.getId())
+        expect(track.getId()).toBe(fakeTrack.getId())
 
-    it('checks setters', () => {
-        const track: Track = new Track(
-            'a',
-            fakeAlbum,
-            fakeArtists,
-            fakeDuration,
-            false,
-            [],
-            '',
-            ''
-        )
+        track.setAlbum(fakeTrack.getAlbum())
+        expect(track.getAlbum()).toStrictEqual(fakeTrack.getAlbum())
 
-        track.setId(fakeId)
-        expect(track.getId()).toBe(fakeId)
+        track.setArtists(fakeTrack.getArtists())
+        expect(track.getArtists()).toStrictEqual(fakeTrack.getArtists())
 
-        track.setAlbum(fakeAlbum)
-        expect(track.getAlbum()).toStrictEqual(fakeAlbum)
+        track.setDuration(fakeTrack.getDuration())
+        expect(track.getDuration()).toBe(fakeTrack.getDuration())
 
-        track.setArtists(fakeArtists)
-        expect(track.getArtists()).toStrictEqual(fakeArtists)
+        track.setExplicit(fakeTrack.isExplicit())
+        expect(track.isExplicit()).toBe(fakeTrack.isExplicit())
 
-        track.setDuration(fakeDuration)
-        expect(track.getDuration()).toBe(fakeDuration)
+        track.setMarkets(fakeTrack.getMarkets())
+        expect(track.getMarkets()).toBe(fakeTrack.getMarkets())
 
-        track.setExplicit(fakeExplicit)
-        expect(track.isExplicit()).toBe(fakeExplicit)
+        track.setName(fakeTrack.getName())
+        expect(track.getName()).toBe(fakeTrack.getName())
 
-        track.setMarkets(fakeMarkets)
-        expect(track.getMarkets()).toBe(fakeMarkets)
-
-        track.setName(fakeName)
-        expect(track.getName()).toBe(fakeName)
-
-        track.setUri(fakeUri)
-        expect(track.getUri()).toBe(fakeUri)
+        track.setUri(fakeTrack.getUri())
+        expect(track.getUri()).toBe(fakeTrack.getUri())
     })
 })
