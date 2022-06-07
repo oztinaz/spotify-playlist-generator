@@ -25,4 +25,11 @@ describe('@/mappers/album.ts', () => {
         expect(album.getTotal()).toBe(fakeSpotifyAlbum.total_tracks)
         expect(album.getType()).toBe(fakeSpotifyAlbum.album_type)
     })
+
+    it('checks spotifyAlbumsToAlbums method', () => {
+        const fakeSpotifyAlbums: Array<SpotifyAlbum> = [generateFakeSpotifyAlbum()]
+        const albums: Array<Album> = AlbumMapper.spotifyAlbumsToAlbums(fakeSpotifyAlbums)
+
+        expect(albums[0].getId()).toStrictEqual(fakeSpotifyAlbums[0].id)
+    })
 })

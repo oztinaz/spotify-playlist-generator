@@ -22,7 +22,31 @@ describe('@/models/duration.ts', () => {
         expect(duration.getMilliseconds()).toBe(fakeDuration.getMilliseconds())
     })
 
-    // it('checks convertFromMilliseconds', () => {
+    it('checks convertFromMilliseconds', () => {
+        const duration: Duration = new Duration()
 
-    // })
+        duration.convertFromMilliseconds(900)
+        expect(duration.getHours()).toBe(0)
+        expect(duration.getMinutes()).toBe(0)
+        expect(duration.getSeconds()).toBe(0)
+        expect(duration.getMilliseconds()).toBe(900)
+        
+        duration.convertFromMilliseconds(1010)
+        expect(duration.getHours()).toBe(0)
+        expect(duration.getMinutes()).toBe(0)
+        expect(duration.getSeconds()).toBe(1)
+        expect(duration.getMilliseconds()).toBe(10)
+        
+        duration.convertFromMilliseconds(61109)
+        expect(duration.getHours()).toBe(0)
+        expect(duration.getMinutes()).toBe(1)
+        expect(duration.getSeconds()).toBe(1)
+        expect(duration.getMilliseconds()).toBe(109)
+        
+        duration.convertFromMilliseconds(3600000)
+        expect(duration.getHours()).toBe(1)
+        expect(duration.getMinutes()).toBe(0)
+        expect(duration.getSeconds()).toBe(0)
+        expect(duration.getMilliseconds()).toBe(0)
+    })
 })

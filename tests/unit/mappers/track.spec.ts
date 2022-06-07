@@ -29,4 +29,11 @@ describe('@/mappers/track.ts', () => {
         expect(track.getName()).toBe(fakeSpotifyTrack.name)
         expect(track.getUri()).toBe(fakeSpotifyTrack.uri)
     })
+
+    it('checks spotifyImagesToImages method', () => {
+        const fakeSpotifyTracks: Array<SpotifyTrack> = [generateFakeSpotifyTrack()]
+        const tracks: Array<Track> = TrackMapper.spotifyTracksToTracks(fakeSpotifyTracks)
+
+        expect(tracks[0].getId()).toStrictEqual(fakeSpotifyTracks[0].id)
+    })
 })

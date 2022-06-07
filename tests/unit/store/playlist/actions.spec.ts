@@ -39,12 +39,10 @@ describe('@/store/playlist/actions.ts', () => {
     
     it('checks createPlaylist action', async () => {
         const fakePlaylist: Playlist = generateFakePlaylist()
+        store.commit('playlist/setCreatedPlaylist', fakePlaylist)
         mockedAxios.post.mockResolvedValue({ data: fakeSpotifyPlaylist1 })
 
-        await store.dispatch('playlist/createPlaylist', {
-            userId: '111',
-            playlist: fakePlaylist
-        })
+        await store.dispatch('playlist/createPlaylist', '111')
 
         expect(mockedAxios.post).toBeCalledTimes(1)
         expect(mockedAxios.post).toBeCalledWith(
@@ -62,7 +60,7 @@ describe('@/store/playlist/actions.ts', () => {
             } 
         )
 
-        expect(store.state.playlist.createdPlaylist?.getName()).toBe(fakeSpotifyPlaylist1.name)
+        expect(store.state.playlist.createdPlaylist.getId()).toBe(fakeSpotifyPlaylist1.id)
     })
     
     it('checks addItemsToPlaylist action', async () => {

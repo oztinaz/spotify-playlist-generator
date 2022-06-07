@@ -19,4 +19,11 @@ describe('@/mappers/image.ts', () => {
         expect(image.getHeight()).toBe(fakeSpotifyImage.height)
         expect(image.getWidth()).toBe(fakeSpotifyImage.width)
     })
+
+    it('checks spotifyImagesToImages method', () => {
+        const fakeSpotifyImages: Array<SpotifyImage> = [generateFakeSpotifyImage()]
+        const images: Array<Image> = ImageMapper.spotifyImagesToImages(fakeSpotifyImages)
+
+        expect(images[0].getUrl()).toStrictEqual(fakeSpotifyImages[0].url)
+    })
 })

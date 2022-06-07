@@ -22,4 +22,11 @@ describe('@/mappers/artist.ts', () => {
         expect(artist.getName()).toBe(fakeSpotifyArtist.name)
         expect(artist.getUri()).toBe(fakeSpotifyArtist.uri)
     })
+
+    it('checks spotifyArtistsToArtists method', () => {
+        const fakeSpotifyArtists: Array<SpotifyArtist> = [generateFakeSpotifyArtist()]
+        const artists: Array<Artist> = ArtistMapper.spotifyArtistsToArtists(fakeSpotifyArtists)
+
+        expect(artists[0].getId()).toStrictEqual(fakeSpotifyArtists[0].id)
+    })
 })

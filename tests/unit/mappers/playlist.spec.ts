@@ -24,4 +24,11 @@ describe('@/mappers/playlist.ts', () => {
         expect(playlist.isPublic()).toBe(fakeSpotifyPlaylist.public)
         expect(playlist.getTotal()).toBe(fakeSpotifyPlaylist.tracks.total)
     })
+
+    it('checks spotifyImagesToImages method', () => {
+        const fakeSpotifyPlaylists: Array<SpotifyPlaylist> = [generateFakeSpotifyPlaylist()]
+        const playlists: Array<Playlist> = PlaylistMapper.spotifyPlaylistsToPlaylists(fakeSpotifyPlaylists)
+
+        expect(playlists[0].getId()).toStrictEqual(fakeSpotifyPlaylists[0].id)
+    })
 })
