@@ -1,7 +1,7 @@
 import { Artist } from '@/models/artist'
 import { Track } from '@/models/track'
 
-export class Seed {
+export class Seeds {
 
     private artists: Array<Artist>
 

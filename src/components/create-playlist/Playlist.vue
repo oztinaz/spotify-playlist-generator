@@ -1,60 +1,123 @@
 <template>
-    <div class="display-playlist">
-        <div class="name">
+    <div class="playlist">
+        <div class="info" v-if="name !== null">
             <div class="label">Name</div>
-            <div class="value">{{ playlist.getName() }}</div>
+            <div class="value">{{ name }}</div>
         </div>
-        <div class="description">
+        <div class="info" v-if="description !== null">
             <div class="label">Description</div>
-            <div class="value">{{ playlist.getDescription() }}</div>
+            <div class="value">{{ description }}</div>
         </div>
-        <div class="tracks">
+
+        <div class="locks">
+            <div class="lock">
+                Public: 
+                <i class="bi bi-unlock" v-if="isPublic"></i>
+                <i class="bi bi-lock" v-else></i>
+            </div>
+            <div class="lock">
+                Collaborative: 
+                <i class="bi bi-unlock" v-if="isCollaborative"></i>
+                <i class="bi bi-lock" v-else></i>
+            </div>
+        </div>
+        <div class="tracks" v-if="tracks.length > 0">
             <div
                 class="track"
-                v-for="track in playlist.getTracks()"
+                v-for="track in tracks"
                 :key="track.getId()"
             >
-                <div><img :src="track.getAlbum().getImages()[0].getUrl()" alt="" height="60" width="60"></div>
-                <div>{{ track.getName() }}</div>
+                <img :src="getTrackImage(track)" height="80" width="80">
+                <div>
+                    <div>{{ track.getName() }}</div>
+                    <div>by {{ artistsText(track.getAlbum().getArtists()) }}</div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { Playlist } from '@/models/playlist'
-import { defineComponent, PropType } from '@vue/runtime-core'
+import { Album } from '@/models/album'
+import { Artist } from '@/models/artist'
+import { Track } from '@/models/track'
+import { defineComponent } from '@vue/runtime-core'
+import { mapState } from 'vuex'
 
 export default defineComponent({
-    props: {
-        playlist: {
-            type: Object as PropType<Playlist>,
-            required: true
+    computed: {
+        ...mapState('playlist', [
+            'createdPlaylist'
+        ]),
+        description(): string | null {
+            return this.createdPlaylist.getDescription()
+        },
+        isCollaborative(): boolean {
+            return this.createdPlaylist.isCollaborative()
+        },
+        isPublic(): boolean {
+            return this.createdPlaylist.isPublic()
+        },
+        name(): string | null {
+            return this.createdPlaylist.getName()
+        },
+        tracks(): Array<Track> {
+            return this.createdPlaylist.getTracks()
         }
+    },
+    methods: {
+        getTrackImage(track: Track): string {
+            if (track.getAlbum() === null || (track.getAlbum() as Album).getImages().length === 0 || (track.getAlbum() as Album).getImages()[0].getUrl() === null) {
+                return ''
+            }
+            return (track.getAlbum() as Album).getImages()[0].getUrl() as string
+        },
+        artistsText(artists: Array<Artist>): string {
+            const a: Array<string> = []
+            artists.map((artist: Artist) => {
+                if (artist.getName() !== null) {
+                    a.push(artist.getName() as string)
+                }
+            })
+            return a.join(', ')
+        },
     }
 })
 </script>
 
 <style scoped>
-.display-playlist {
-    width: 100vh;
-}
-
-.name {
-    display: flex;
-}
-
-.description {
-    display: flex;
+.playlist {
+    width: 100%;
 }
 
 .label {
-    width: 100px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    height: 50px;
+    background: rgb(243, 238, 238);
+}
+
+.value {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    min-height: 50px;
+    background: rgb(250, 249, 249);
+}
+
+.locks {
+    display: flex;
+    gap: 20px;
+}
+
+.tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .track {
     display: flex;
-    align-items: center;
-    gap: 20px;
 }
 </style>

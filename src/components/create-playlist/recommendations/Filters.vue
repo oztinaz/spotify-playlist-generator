@@ -1,18 +1,21 @@
 <template>
     <div class="filters">
         <div
+            class="filter"
             v-for="filter in filters"
             :key="filter.key"
         >
-            <div>{{ keyToLabel(filter) }}: {{ filter.value }}</div>
-            <div>
+            <div class="label">
+                {{ keyToLabel(filter.key) }} {{ filter.value }}
+            </div>
+            <div class="input">
                 <input
                     type="range"
-                    class="form-range"
-                    v-model="filter.value"
-                    :min="filter.min"
+                    class="form-control"
                     :max="filter.max"
+                    :min="filter.min"
                     :step="filter.step"
+                    v-model="filter.value"
                 >
             </div>
         </div>
@@ -25,8 +28,8 @@ import { defineComponent, PropType } from '@vue/runtime-core'
 export type Filter = {
     key: string,
     value: number | null,
-    min: number | null,
-    max: number | null,
+    max: number
+    min: number,
     step: number
 }
 
@@ -38,15 +41,17 @@ export default defineComponent({
         }
     },
     methods: {
-        keyToLabel(filter: Filter): string {
-            return filter.key.charAt(0).toUpperCase() + filter.key.slice(1)
+        keyToLabel(key: string): string {
+            return key.charAt(0).toUpperCase() + key.slice(1)
         }
     }
-})  
+})
 </script>
 
 <style scoped>
 .filters {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 </style>

@@ -3,7 +3,9 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 // Views
 import AskAuthorization from '@/views/AskAuthorization.vue'
 import Authorization from '@/views/Authorization.vue'
-import CreatePlaylist from '@/views/create-playlist/Main.vue'
+import CreatePlaylistMain from '@/views/create-playlist/Main.vue'
+import CreatePlaylistForm from '@/views/create-playlist/Form.vue'
+import CreatePlaylistRecommendations from '@/views/create-playlist/Recommendations.vue'
 import Home from '@/views/Home.vue'
 import Playlists from '@/views/Playlists.vue'
 
@@ -26,7 +28,19 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/create-playlist',
         name: 'CreatePlaylist',
-        component: CreatePlaylist
+        component: CreatePlaylistMain,
+        children: [
+            {
+                path: '/create-playlist/form',
+                name: 'CreatePlaylistForm',
+                component: CreatePlaylistForm,
+            },
+            {
+                path: '/create-playlist/recommendations',
+                name: 'CreatePlaylistRecommendations',
+                component: CreatePlaylistRecommendations,
+            }
+        ]
     },
     {
         path: '/playlists',

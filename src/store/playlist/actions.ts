@@ -28,10 +28,7 @@ export interface Actions {
     ): Promise<void>
     [ActionTypes.CREATE_PLAYLIST](
         { commit }: AugmentedActionContext,
-        payload: {
-            userId: string,
-            playlist: Playlist
-        }
+        userId: string
     ): Promise<void>
     [ActionTypes.ADD_ITEMS_TO_PLAYLIST](
         { commit }: AugmentedActionContext,
@@ -56,14 +53,14 @@ export const actions: ActionTree<State, RootState> & Actions = {
             commit(MutationTypes.SET_PLAYLISTS, playlists)
         })
     },
-    async [ActionTypes.CREATE_PLAYLIST]({ commit, rootState }, payload) {
+    async [ActionTypes.CREATE_PLAYLIST]({ commit, rootState, state }, userId) {
         await axios.post(
-            'https://api.spotify.com/v1/users/' + payload.userId +'/playlists',
+            'https://api.spotify.com/v1/users/' + userId +'/playlists',
             {
-                name: payload.playlist.getName(),
-                public: payload.playlist.isPublic(),
-                collaborative: payload.playlist.isCollaborative(),
-                description: payload.playlist.getDescription()
+                name: state.createdPlaylist.getName(),
+                public: state.createdPlaylist.isPublic(),
+                collaborative: state.createdPlaylist.isCollaborative(),
+                description: state.createdPlaylist.getDescription()
             },
             {
                 headers: {
@@ -71,12 +68,13 @@ export const actions: ActionTree<State, RootState> & Actions = {
                 }
             }
         ).then((resp: { data: SpotifyPlaylist }) => {
-            commit(MutationTypes.SET_CREATED_PLAYLIST, PlaylistMapper.spotifyPlaylistToPlaylist(resp.data))
+            state.createdPlaylist.setId(resp.data.id)
+            // commit(MutationTypes.SET_CREATED_PLAYLIST, PlaylistMapper.spotifyPlaylistToPlaylist(resp.data))
         })
     },
     async [ActionTypes.ADD_ITEMS_TO_PLAYLIST]({ commit, rootState, state }, payload) {
         await axios.post(
-            'https://api.spotify.com/v1/playlists/' + state.createdPlaylist?.getId() +'/tracks',
+            'https://api.spotify.com/v1/playlists/' + state.createdPlaylist.getId() +'/tracks',
             {
                 uris: payload
             },

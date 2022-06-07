@@ -7,11 +7,13 @@ import { actions } from '@/store/playlist/actions'
 // import { getters } from '@/store/authorization/getters'
 import { mutations } from '@/store/playlist/mutations'
 
+import { Playlist } from '@/models/playlist'
+
 const playlist: Module<State, RootState> = {
     namespaced: true,
     state: {
         playlists: [],
-        createdPlaylist: null
+        createdPlaylist: new Playlist()
     },
     // getters: getters,
     mutations: mutations,

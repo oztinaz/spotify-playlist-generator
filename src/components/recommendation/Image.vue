@@ -1,6 +1,6 @@
 <template>
     <div class="image">
-        <img :src="src" :height="height" :width="width">
+        <img :src="src" :height="height" :width="width" v-if="src !== null">
     </div>
 </template>
 

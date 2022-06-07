@@ -7,12 +7,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div
+                    <Recommendation
                         v-for="recommendation in recommendations"
                         :key="recommendation.getId()"
-                    >
-                        <Recommendation :recommendation="recommendation" @click="addRecommendation(recommendation)"/>
-                    </div>
+                        :recommendation="recommendation"
+                        @click="addRecommendation(recommendation)"
+                    />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -24,32 +24,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/runtime-core'
+import { defineComponent } from '@vue/runtime-core'
+import { mapState } from 'vuex'
 
+// Components
 import Recommendation from '@/components/recommendation/Main.vue'
 
-import { Playlist } from '@/models/playlist'
+// Models
 import { Track } from '@/models/track'
 
 export default defineComponent({
     components: {
         Recommendation
     },
-    props: {
-        recommendations: {
-            type: Object as PropType<Track>,
-            required: true
-        },
-        playlist: {
-            type: Object as PropType<Playlist>,
-            required: true
-        }
+    
+    computed: {
+        ...mapState('playlist', [
+            'createdPlaylist'
+        ]),
+        ...mapState('track', [
+            'recommendations'
+        ])
     },
     methods: {
         addRecommendation(recommendation: Track): void {
-            const tracks: Array<Track> = this.playlist.getTracks()
+            const tracks: Array<Track> = this.createdPlaylist.getTracks()
             tracks.push(recommendation)
-            this.playlist.setTracks(tracks)
+            this.createdPlaylist.setTracks(tracks)
         }
     }
 })
