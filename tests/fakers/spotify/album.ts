@@ -10,6 +10,7 @@ export function generateFakeSpotifyAlbum(): SpotifyAlbum {
         images: [generateFakeSpotifyImage()],
         available_markets: [faker.random.word()],
         name: faker.random.word(),
+        release_date: faker.datatype.datetime().toISOString(),
         total_tracks: faker.datatype.number({ min: 0, max: 40 }),
         album_type: faker.random.word()
     }

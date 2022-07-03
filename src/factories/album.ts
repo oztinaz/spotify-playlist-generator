@@ -11,6 +11,7 @@ export class AlbumFactory {
         images: Array<Image>,
         markets: Array<string>,
         name: string,
+        releaseDate: Date,
         total: number,
         type: string
     ): Album {
@@ -21,6 +22,7 @@ export class AlbumFactory {
         album.setImages(images)
         album.setMarkets(markets)
         album.setName(name)
+        album.setReleaseDate(releaseDate)
         album.setTotal(total)
         album.setType(type)
 

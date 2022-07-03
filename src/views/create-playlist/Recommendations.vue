@@ -325,6 +325,7 @@ export default defineComponent({
 }
 
 .searched-items {
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -342,6 +343,7 @@ export default defineComponent({
 }
 
 .selected-items {
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;

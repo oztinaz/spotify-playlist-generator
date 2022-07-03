@@ -12,6 +12,8 @@ export class Album {
     private markets: Array<string>
 
     private name: string | null
+    
+    private releaseDate: Date | null
 
     private total: number
     
@@ -23,6 +25,7 @@ export class Album {
         this.images = []
         this.markets = []
         this.name = null
+        this.releaseDate = null
         this.total = 0
         this.type = null
     }
@@ -65,6 +68,14 @@ export class Album {
 
     public setName(name: string | null): void {
         this.name = name
+    }
+
+    public getReleaseDate(): Date | null {
+        return this.releaseDate
+    }
+
+    public setReleaseDate(releaseDate: Date | null): void {
+        this.releaseDate = releaseDate
     }
 
     public getTotal(): number {

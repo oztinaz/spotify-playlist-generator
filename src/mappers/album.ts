@@ -24,13 +24,14 @@ export class AlbumMapper {
     public static spotifyAlbumToAlbum(spotifyAlbum: SpotifyAlbum): Album {
         const artists: Array<Artist> = ArtistMapper.spotifyArtistsToArtists(spotifyAlbum.artists)
         const images: Array<Image> = ImageMapper.spotifyImagesToImages(spotifyAlbum.images)
-        
+
         return AlbumFactory.create(
             spotifyAlbum.id,
             artists,
             images,
             spotifyAlbum.available_markets,
             spotifyAlbum.name,
+            new Date(spotifyAlbum.release_date),
             spotifyAlbum.total_tracks,
             spotifyAlbum.album_type
         )

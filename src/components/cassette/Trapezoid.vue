@@ -1,12 +1,11 @@
 <template>
     <div class="trapezoid">
-        <div class="side">
-            <div class="empty-circle"></div>
-            <div class="empty-box"></div>
+        <div class="head">
+            <Hole/>
+            <Hole/>
         </div>
-        <div class="side">
-            <div class="empty-box"></div>
-            <div class="empty-circle"></div>
+        <div class="footer">
+            <Screw/>
         </div>
     </div>
 </template>
@@ -14,44 +13,40 @@
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core'
 
+// Components
+import Hole from '@/components/cassette/Hole.vue'
+import Screw from '@/components/cassette/Screw.vue'
+
 export default defineComponent({
-    
+    components: {
+        Hole,
+        Screw
+    }
 })
 </script>
 
 <style scoped>
 .trapezoid {
-    border: 2px solid rgba(194, 194, 194, 0.842);
-    border-bottom: none;
+    background: #5f6167;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 1px 2px 1px 1px;
+
     height: 50px;
     width: 200px;
-    transform: perspective(20px) rotateX(1deg);
-    margin: 1px;
 
+    transform: perspective(10px) rotateX(-1deg);
+}
+
+.head {
     display: flex;
-    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 25px;
+    padding-top: 5px;
+}
+
+.footer {
+    display: flex;
     justify-content: center;
-    gap: 28px;
-}
-
-.side {
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-    margin: 0 0 7px 0;
-}
-
-.empty-circle {
-    border: 1px solid rgba(82, 81, 81, 0.842);
-    border-radius: 50%;
-    height: 15px;
-    width: 15px;
-}
-
-.empty-box {
-    border: 1px solid rgba(97, 97, 97, 0.842);
-    border-radius: 4px;
-    height: 20px;
-    width: 20px;
+    padding-top: 5px;
 }
 </style>

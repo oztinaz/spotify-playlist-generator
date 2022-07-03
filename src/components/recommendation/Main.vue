@@ -35,9 +35,10 @@ export default defineComponent({
 <style scoped>
 .recommendation {
     display: flex;
+    gap: 10px;
 
-    height: 150px;
+    height: 152px;
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid rgb(167, 167, 167);
 }
 </style>

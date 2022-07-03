@@ -1,10 +1,13 @@
 <template>
     <div id="playlists">
-        <Cassette
-            v-for="playlist in playlists"
-            :key="playlist.getId()"
-            :playlist="playlist"
-        />
+        <div class="ddd"
+                v-for="playlist in playlists"
+                :key="playlist.getId()"
+            >
+            <Cassette
+                :playlist="playlist"/>
+            <Cover :playlist="playlist"/>
+        </div>
     </div>
 </template>
 
@@ -13,10 +16,13 @@ import { defineComponent } from '@vue/runtime-core'
 import { mapActions, mapState } from 'vuex'
 
 import Cassette from '@/components/cassette/Main.vue'
+import Cover from '@/components/cassette/Cover.vue'
+// import Cassette from '@/components/cassette/Main.vue'
 
 export default defineComponent({
     components: {
-        Cassette
+        Cassette,
+        Cover
     },
     computed: {
         ...mapState('playlist', [
@@ -38,6 +44,12 @@ export default defineComponent({
 #playlists {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 10px 50px;
+}
+
+.ddd {
+    display: flex;
+    gap: 10px;
+    padding: 80px 20px;
 }
 </style>

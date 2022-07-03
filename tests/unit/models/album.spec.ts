@@ -24,6 +24,9 @@ describe('@/models/album.ts', () => {
         album.setName(fakeAlbum.getName())
         expect(album.getName()).toBe(fakeAlbum.getName())
 
+        album.setReleaseDate(fakeAlbum.getReleaseDate())
+        expect(album.getReleaseDate()).toBe(fakeAlbum.getReleaseDate())
+
         album.setTotal(fakeAlbum.getTotal())
         expect(album.getTotal()).toBe(fakeAlbum.getTotal())
 

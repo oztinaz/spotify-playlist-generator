@@ -8,5 +8,6 @@ export type SpotifyAlbum = {
     available_markets: Array<string>,
     name: string,
     total_tracks: number,
-    album_type: string
+    album_type: string,
+    release_date: string
 }

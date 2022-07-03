@@ -11,6 +11,7 @@ export function generateFakeAlbum(): Album {
         [generateFakeImage()],
         [faker.random.word()],
         faker.random.word(),
+        faker.datatype.datetime(),
         faker.datatype.number({ min: 0, max: 40 }),
         faker.random.word()
     )

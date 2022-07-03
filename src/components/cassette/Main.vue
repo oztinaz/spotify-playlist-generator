@@ -1,15 +1,27 @@
 <template>
     <div class="cassette">
-        <div class="head">{{ name }}</div>
-        <div class="body">
-            <Wheel/>
-            <div class="totals">
-                {{ totalText }}
-            </div>
-            <Wheel/>
-        </div>
-        <div class="footer">
+        <div class="head">
+            <Screw :style="{padding: '5px'}"/>
             <Trapezoid/>
+            <Screw :style="{padding: '5px'}"/>
+        </div>
+        <Body/>
+        <div class="footer">
+            <div class="string">
+                <div class="empty"></div>
+                <div class="info">
+                    <div class="title text-truncate">{{ playlist.getName() }}</div>
+                    <div class="tracks">(
+                        <div>{{ playlist.getTotal() }}</div>
+                        <div>Songs</div>    
+                    )</div>
+                </div>
+                <div class="empty"></div>
+            </div>
+            <div class="footer-bottom">
+                <Screw :style="{paddingLeft: '5px', paddingBottom: '5px'}"/>
+                <Screw :style="{paddingRight: '5px', paddingBottom: '5px'}"/>
+            </div>
         </div>
     </div>
 </template>
@@ -17,35 +29,24 @@
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/runtime-core'
 
+// Components
+import Body from '@/components/cassette/body/Main.vue'
+import Screw from '@/components/cassette/Screw.vue'
 import Trapezoid from '@/components/cassette/Trapezoid.vue'
-import Wheel from '@/components/cassette/Wheel.vue'
 
+// Models
 import { Playlist } from '@/models/playlist'
 
 export default defineComponent({
     components: {
-        Trapezoid,
-        Wheel
+        Body,
+        Screw,
+        Trapezoid
     },
     props: {
         playlist: {
             type: Object as PropType<Playlist>,
             required: true
-        }
-    },
-    computed: {
-        totalText(): string {
-            let text: string = this.playlist.getTotal() + ' track'
-            if (this.total > 1) {
-                text += 's'
-            }
-            return text
-        },
-        total(): number {
-            return this.playlist.getTotal()
-        },
-        name(): string | null {
-            return this.playlist.getName()
         }
     }
 })
@@ -53,30 +54,57 @@ export default defineComponent({
 
 <style scoped>
 .cassette {
-    background: rgb(245, 245, 245);
-    border: 1px solid rgb(167, 167, 167);
-    box-shadow: outset 0px 5px 10px 0px rgba(136, 136, 136, 0.5);
-    width: 350px;
-    padding: 20px 20px 0 20px;
+    border: 1px solid #5f6167;
+    border-radius: 7px;
+    background: #5f6167;
+
+    height: 300px;
+    width: 470px;
+    box-shadow: 2px 2px 2px 2px;
 }
 
-.body {
+.head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.screw-container {
+    padding: 5px;
+}
+
+.string {
+    background: #e9e3df;
+    margin: 10px 20px;
+}
+
+.empty {
+    height: 10px;
+}
+
+.empty:first-child {
+    border-bottom: 1px solid #5c5c5c;
+}
+
+.empty:last-child {
+    border-top: 1px solid #5c5c5c;
+}
+
+.info {
+    width: 100%;
+    padding: 0 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    padding: 25px 0;
+    gap: 5px;
 }
 
-.totals {
+.tracks {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 4px;
 }
 
-.footer {
+.footer-bottom {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    justify-content: space-between;
 }
 </style>

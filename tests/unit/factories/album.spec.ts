@@ -11,6 +11,7 @@ describe('@/factories/album.ts', () => {
             fakeAlbum.getImages(),
             fakeAlbum.getMarkets(),
             fakeAlbum.getName() as string,
+            fakeAlbum.getReleaseDate() as Date,
             fakeAlbum.getTotal(),
             fakeAlbum.getType() as string
         )
@@ -20,6 +21,7 @@ describe('@/factories/album.ts', () => {
         expect(album.getImages()).toStrictEqual(fakeAlbum.getImages())
         expect(album.getMarkets()).toBe(fakeAlbum.getMarkets())
         expect(album.getName()).toBe(fakeAlbum.getName())
+        expect(album.getReleaseDate()).toBe(fakeAlbum.getReleaseDate())
         expect(album.getTotal()).toBe(fakeAlbum.getTotal())
         expect(album.getType()).toBe(fakeAlbum.getType())
     })
