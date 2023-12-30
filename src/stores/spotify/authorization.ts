@@ -4,6 +4,7 @@ import { computed, ref, type ComputedRef, type Ref } from 'vue'
 export const useSpotifyAuthorizationStore = defineStore('spotify-authorization', () => {
   const accountsUrl: Ref<string> = ref(import.meta.env.VITE_SPOTIFY_ACCOUNTS_URL)
   const clientId: Ref<string> = ref(import.meta.env.VITE_SPOTIFY_CLIENT_ID)
+  const clientSecret: Ref<string> = ref(import.meta.env.VITE_SPOTIFY_CLIENT_SECRET)
   const redirectUri: Ref<string> = ref(import.meta.env.VITE_SPOTIFY_REDIRECT_URI)
   const responseType: Ref<string> = ref('code')
   const state: Ref<string> = ref(import.meta.env.VITE_SPOTIFY_STATE)
@@ -19,6 +20,10 @@ export const useSpotifyAuthorizationStore = defineStore('spotify-authorization',
   })
 
   return {
-    authorizationUrl
+    accountsUrl,
+    authorizationUrl,
+    clientId,
+    clientSecret,
+    redirectUri
   }
 })
