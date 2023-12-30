@@ -11,12 +11,14 @@ export const useSpotifyAuthorizationStore = defineStore('spotify-authorization',
   const scope: Ref<string> = ref(import.meta.env.VITE_SPOTIFY_SCOPE)
 
   const authorizationUrl: ComputedRef<string> = computed((): string => {
-    return `${accountsUrl.value}/authorize?` +
+    return (
+      `${accountsUrl.value}/authorize?` +
       `client_id=${clientId.value}&` +
-      `redirect_uri=${redirectUri.value}&` + 
-      `response_type=${responseType.value}&` + 
+      `redirect_uri=${redirectUri.value}&` +
+      `response_type=${responseType.value}&` +
       `state=${state.value}&` +
       `scope=${scope.value}`
+    )
   })
 
   return {

@@ -1,6 +1,6 @@
-import { afterEach, describe, expect, test, vi, type Mocked } from "vitest";
+import { afterEach, describe, expect, test, vi, type Mocked } from 'vitest'
 import axios from 'axios'
-import { AxiosUtils } from "@/utils/Axios";
+import { AxiosUtils } from '@/utils/Axios'
 
 vi.mock('axios')
 const mockedAxios = axios as Mocked<typeof axios>

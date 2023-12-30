@@ -18,11 +18,13 @@ describe('stores/spotify/authorization', () => {
 
     const store = useSpotifyAuthorizationStore()
 
-    expect(store.authorizationUrl).toBe(`${str}/authorize?` +
-    `client_id=${str}&` +
-    `redirect_uri=${str}&` + 
-    `response_type=code&` + 
-    `state=${str}&` +
-    `scope=${str}`)
+    expect(store.authorizationUrl).toBe(
+      `${str}/authorize?` +
+        `client_id=${str}&` +
+        `redirect_uri=${str}&` +
+        `response_type=code&` +
+        `state=${str}&` +
+        `scope=${str}`
+    )
   })
 })
