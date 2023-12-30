@@ -8,9 +8,7 @@ const { authorizationUrl } = storeToRefs(spotifyAuthorizationStore)
 
 <template>
   <div id="ask-authorization-view">
-    <a :href="authorizationUrl" data-test="authorize-anchor">
-      Authorize
-    </a>
+    <a :href="authorizationUrl" data-test="authorize-anchor"> Authorize </a>
   </div>
 </template>
 

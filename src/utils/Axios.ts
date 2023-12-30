@@ -8,18 +8,17 @@ export class AxiosUtils {
     body: { [key: string]: any } | null = null
   ): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
-      await axios.post(
-        url,
-        body,
-        {
+      await axios
+        .post(url, body, {
           headers: headers,
           params: params
-        }
-      ).then((resp: { data: T }) => {
-        resolve(resp.data)
-      }).catch((error) => {
-        reject(error)
-      })
+        })
+        .then((resp: { data: T }) => {
+          resolve(resp.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
   }
 }

@@ -1,6 +1,6 @@
 export class CookieUtils {
-  public static all(): { [key: string ]: string } {
-    const pairs: { [key: string ]: string } = {}
+  public static all(): { [key: string]: string } {
+    const pairs: { [key: string]: string } = {}
     const cookieStringSplit: string[] = CookieUtils.cookieStringSplit()
 
     if (cookieStringSplit[0] !== '') {
@@ -11,7 +11,7 @@ export class CookieUtils {
         pairs[parts[0]] = parts[1]
       }
     }
-    
+
     return pairs
   }
 

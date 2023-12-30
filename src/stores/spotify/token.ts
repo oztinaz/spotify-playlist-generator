@@ -3,11 +3,12 @@ import { useSpotifyAuthorizationStore } from '@/stores/spotify/authorization'
 import { computed, ref, type ComputedRef, type Ref } from 'vue'
 import { Buffer } from 'buffer'
 import { AxiosUtils } from '@/utils/Axios'
-import type { SpotifyAccessToken, SpotifyRefreshToken, SpotifyToken } from '@/types/spotify/Token'
+import type { SpotifyAccessToken, SpotifyRefreshToken } from '@/types/spotify/Token'
 
 export const useSpotifyTokenStore = defineStore('spotify-token', () => {
   const spotifyAuthorizationStore = useSpotifyAuthorizationStore()
-  const { accountsUrl, clientId, clientSecret, redirectUri } = storeToRefs(spotifyAuthorizationStore)
+  const { accountsUrl, clientId, clientSecret, redirectUri } =
+    storeToRefs(spotifyAuthorizationStore)
 
   const contentType: Ref<string> = ref('application/x-www-form-urlencoded')
 
@@ -18,7 +19,8 @@ export const useSpotifyTokenStore = defineStore('spotify-token', () => {
   const getAccessTokenRequestHeaders = (): { [key: string]: any } => {
     return {
       'content-type': contentType.value,
-      'Authorization': 'Basic ' + Buffer.from(`${clientId.value}:${clientSecret.value}`).toString('base64')
+      Authorization:
+        'Basic ' + Buffer.from(`${clientId.value}:${clientSecret.value}`).toString('base64')
     }
   }
 
@@ -33,7 +35,8 @@ export const useSpotifyTokenStore = defineStore('spotify-token', () => {
   const getRefreshTokenRequestHeaders = (): { [key: string]: any } => {
     return {
       'content-type': contentType.value,
-      'Authorization': 'Basic ' + Buffer.from(`${clientId.value}:${clientSecret.value}`).toString('base64')
+      Authorization:
+        'Basic ' + Buffer.from(`${clientId.value}:${clientSecret.value}`).toString('base64')
     }
   }
 
@@ -48,25 +51,20 @@ export const useSpotifyTokenStore = defineStore('spotify-token', () => {
     headers: { [key: string]: any },
     body: { [key: string]: any }
   ): Promise<T> => {
-    return await AxiosUtils.post<T>(
-      tokenUrl.value,
-      headers,
-      {},
-      body
-    )
+    return await AxiosUtils.post<T>(tokenUrl.value, headers, {}, body)
   }
 
   const fetchAccessToken = async (code: string): Promise<SpotifyAccessToken> => {
     const headers = getAccessTokenRequestHeaders()
     const body = getAccessTokenRequestBody(code)
-  
+
     return await fetchToken<SpotifyAccessToken>(headers, body)
   }
 
   const fetchRefreshToken = async (code: string): Promise<SpotifyRefreshToken> => {
     const headers = getRefreshTokenRequestHeaders()
     const body = getRefreshTokenRequestBody(code)
-  
+
     return await fetchToken<SpotifyRefreshToken>(headers, body)
   }
 
