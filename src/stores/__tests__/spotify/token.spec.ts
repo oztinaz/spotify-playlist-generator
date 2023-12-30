@@ -20,4 +20,16 @@ describe('stores/spotify/token', () => {
 
     expect(response).toBe(fakeResponse)
   })
+
+  test('fetchRefreshToken uses AxiosUtils.post method', async () => {
+    const fakeResponse: string = 'fake response'
+		vi.spyOn(AxiosUtils, 'post').mockResolvedValueOnce(fakeResponse);
+
+    const spotifyTokenStore = useSpotifyTokenStore()
+    const { fetchRefreshToken } = spotifyTokenStore
+
+    const response = await fetchRefreshToken('any url')
+
+    expect(response).toBe(fakeResponse)
+  })
 })
