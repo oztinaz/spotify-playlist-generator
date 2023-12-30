@@ -3,5 +3,10 @@ export type SpotifyToken = {
   token_type: string
   scope: string
   expires_in: number
+}
+
+export type SpotifyAccessToken = SpotifyToken & {
   refresh_token: string
 }
+
+export type SpotifyRefreshToken = SpotifyToken
