@@ -26,4 +26,21 @@ describe('utils/Axios', () => {
       await AxiosUtils.post<any>('')
     }).rejects.toThrow(fakeError)
   })
+
+  test('get resolves data when axios.get works successfully', async () => {
+    const fakeResponse: string = 'Fake response'
+    mockedAxios.get.mockResolvedValueOnce({
+      data: fakeResponse
+    })
+    const response = await AxiosUtils.get<any>('')
+    expect(response).toBe(fakeResponse)
+  })
+
+  test('get rejects error when axios.get fails', () => {
+    const fakeError: string = 'Fake error'
+    mockedAxios.get.mockRejectedValueOnce(fakeError)
+    expect(async () => {
+      await AxiosUtils.get<any>('')
+    }).rejects.toThrow(fakeError)
+  })
 })
